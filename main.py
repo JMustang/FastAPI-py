@@ -13,6 +13,10 @@ class Post(BaseModel):
     rating: Optional[int] = None
 
 
+book_lib_db = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
+               {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2}]
+
+
 @app.get('/')
 def root():
     return {'message': 'Hello, world!'}
@@ -20,10 +24,10 @@ def root():
 
 @app.get("/posts")
 def get_post():
-    return {"data": "This is your posts"}
+    return {"data": book_lib_db}
 
 
-@app.post("/createposts")
+@app.post("/posts")
 def create_post(post: Post):
     print(post)
     print(post.dict())
