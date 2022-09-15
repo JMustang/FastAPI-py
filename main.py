@@ -24,7 +24,7 @@ def root():
 
 
 @app.get("/posts")
-def get_post():
+def get_posts():
     return {"data": book_lib_db}
 
 
@@ -34,3 +34,9 @@ def create_post(post: Post):
     post_dict['id'] = randrange(0, 10000)
     book_lib_db.append(post_dict)
     return {"data": post_dict}
+
+
+@app.get('/posts/{id}/')
+def get_post(id):
+    print(id)
+    return {"post_detail": f"Here is post {id}"}
