@@ -18,6 +18,12 @@ book_lib_db = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
                {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2}]
 
 
+def find_post(id):
+    for p in book_lib_db:
+        if p["id"] == id:
+            return p
+
+
 @app.get('/')
 def root():
     return {'message': 'Hello, world!'}
@@ -37,6 +43,6 @@ def create_post(post: Post):
 
 
 @app.get('/posts/{id}/')
-def get_post(id):
-    print(id)
-    return {"post_detail": f"Here is post {id}"}
+def get_post(id: int):
+    post = find_post(id)
+    return {"post_detail": post}
