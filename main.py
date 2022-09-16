@@ -42,7 +42,13 @@ def create_post(post: Post):
     return {"data": post_dict}
 
 
-@app.get('/posts/{id}/')
+@app.get('/post/lastest')
+def get_latest_post():
+    post = book_lib_db[len(book_lib_db)-1]
+    return {"details": post}
+
+
+@app.get('/posts/{id}')
 def get_post(id: int):
     post = find_post(id)
     return {"post_detail": post}
