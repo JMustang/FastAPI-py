@@ -24,6 +24,12 @@ def find_post(id):
             return p
 
 
+def find_index_post(id):
+    for i, p in enumerate(book_lib_db):
+        if p["id"] == id:
+            return i
+
+
 @app.get('/')
 def root():
     return {'message': 'Hello, world!'}
@@ -51,3 +57,15 @@ def get_post(id: int):
                             detail=f'Post with id: {id}, not found')
 
     return {"post_detail": post}
+
+
+@app.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(id: int):
+    index = find_index_post(id)
+
+    if index == None:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                            detail=f'Post with id: {id} does not exist!')
+
+    book_lib_db.pop(index)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
