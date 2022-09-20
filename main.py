@@ -9,7 +9,7 @@ app = FastAPI()
 
 class Post(BaseModel):
     title: str
-    content: str
+    author: str
     published: bool = True
     rating: Optional[int] = None
 
@@ -69,3 +69,17 @@ def delete_post(id: int):
 
     book_lib_db.pop(index)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@app.put('/posts/{id}')
+def update_post(id: int, post: Post):
+    index = find_index_post(id)
+
+    if index == None:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                            detail=f'Post with id: {id} does not exist!')
+
+    post_dict = post.dict()
+    post_dict['id'] = id
+    book_lib_db[index] = post_dict
+    return {'data': post_dict}
