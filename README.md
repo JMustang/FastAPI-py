@@ -8,3 +8,10 @@ Link for more information about [FastAPI](https://fastapi.tiangolo.com/) or [pyt
 - Python API Development - Comprehensive Course for Beginners
 
 A restful crud api with python using fastapi framework.
+
+
+### CRUD
+- GET     = root():
+- POST    = create_posts(post: Post):
+- DELETE  = delete_post(id: int):
+- PUT     = update_post(id: int, post: Post):
