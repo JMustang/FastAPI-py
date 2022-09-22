@@ -8,6 +8,8 @@ Link for more information about [FastAPI](https://fastapi.tiangolo.com/) or [pyt
 - Python API Development - Comprehensive Course for Beginners
 
 A restful crud api with python using fastapi framework.
+SWAGGER
+[SWAGGER](http://127.0.0.1:8000/docs#/) docs.
 
 
 ### CRUD
