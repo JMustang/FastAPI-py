@@ -11,7 +11,7 @@ A restful crud api with python using fastapi framework.
 
 
 ### CRUD
-- GET     = root():
-- POST    = create_posts(post: Post):
-- DELETE  = delete_post(id: int):
-- PUT     = update_post(id: int, post: Post):
+- GET     endpoint ('/')
+- POST    endpoint ("/posts")
+- DELETE  endpoint ('/posts/{id}')
+- PUT     endpoint ('/posts/{id}')
