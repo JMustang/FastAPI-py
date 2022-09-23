@@ -17,3 +17,12 @@ SWAGGER
 - POST    endpoint ("/posts")
 - DELETE  endpoint ('/posts/{id}')
 - PUT     endpoint ('/posts/{id}')
+
+
+### database
+
+- PostgresSQL
+
+```sql
+docker run --name postgres-nest -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+```
