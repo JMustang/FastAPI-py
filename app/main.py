@@ -14,18 +14,18 @@ class Post(BaseModel):
     rating: Optional[int] = None
 
 
-book_lib_db = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
-               {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2}]
+products = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
+            {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2}]
 
 
 def find_post(id):
-    for p in book_lib_db:
+    for p in products:
         if p["id"] == id:
             return p
 
 
 def find_index_post(id):
-    for i, p in enumerate(book_lib_db):
+    for i, p in enumerate(products):
         if p["id"] == id:
             return i
 
@@ -37,14 +37,14 @@ def root():
 
 @app.get("/posts")
 def get_posts():
-    return {"data": book_lib_db}
+    return {"data": products}
 
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post):
     post_dict = post.dict()
     post_dict['id'] = randrange(0, 10000)
-    book_lib_db.append(post_dict)
+    products.append(post_dict)
     return {"data": post_dict}
 
 
@@ -67,7 +67,7 @@ def delete_post(id: int):
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
                             detail=f'Post with id: {id} does not exist!')
 
-    book_lib_db.pop(index)
+    products.pop(index)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -81,5 +81,5 @@ def update_post(id: int, post: Post):
 
     post_dict = post.dict()
     post_dict['id'] = id
-    book_lib_db[index] = post_dict
+    products[index] = post_dict
     return {'data': post_dict}
