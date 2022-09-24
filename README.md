@@ -24,5 +24,12 @@ SWAGGER
 - PostgresSQL
 
 ```sql
-docker run --name postgres-nest -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+-- Run this command with the following options:
+
+docker run --name postgres-py -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
 ```
+- docker run: Run the Docker
+- --name postgres-py: Name of the container
+- -p 5432:5432: This is the port that will be used to connect to the postgres server.
+- -e POSTGRES_PASSWORD=postgres: Create a password for the postgres server.
+- -d postgres: The postgres server will connect.
