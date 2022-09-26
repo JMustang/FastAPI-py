@@ -23,6 +23,8 @@ SWAGGER
 
 - PostgresSQL
 
+Psycopg: Drive for postgres database
+
 ```sql
 -- Run this command with the following options:
 
