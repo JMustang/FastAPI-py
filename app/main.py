@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from random import randrange
 import psycopg2
 from psycopg2.extras import RealDictCursor
+import time
 
 app = FastAPI()
 
@@ -15,14 +16,17 @@ class Post(BaseModel):
     published: bool = True
 
 
-try:
-    conn = psycopg2.connect(host='localhost', database='fastapi',
-                            user='postgres', password='postgres', cursor_factory=RealDictCursor)
-    cursor = conn.cursor()
-    print('Database connection was succesfully established')
-except Exception as error:
-    print('connection to database isFailed!')
-    print('Error: ', error)
+while True:
+    try:
+        conn = psycopg2.connect(host='localhost', database='fastapi',
+                                user='postgres', password='postgres', cursor_factory=RealDictCursor)
+        cursor = conn.cursor()
+        print('Database connection was succesfully established')
+        break
+    except Exception as error:
+        print('connection to database isFailed!')
+        print('Error: ', error)
+        time.sleep(2)
 
 products = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
             {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2}]
