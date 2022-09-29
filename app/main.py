@@ -29,7 +29,8 @@ while True:
         time.sleep(2)
 
 products = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
-            {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2}]
+            {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2},
+            {"title": "As Aventuras Do Caça Feitiço", "author": "Joseph DeLaney", "id": 3}]
 
 
 def find_post(id):
@@ -53,17 +54,16 @@ def root():
 def get_posts():
     cursor.execute(""" SELECT * FROM posts """)
     posts = cursor.fetchall()
-
     return {"data": posts}
 
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post):
-    cursor.execute
-    ("""INSERT INTO posts (title, author, published) VALUES (%s, %s, %s) RETURNING * """,
-     (post.title, post.author, post.published))
+    cursor.execute("""INSERT INTO posts (title, author, published) VALUES (%s, %s, %s) RETURNING * """,
+                   (post.title, post.author, post.published))
 
     new_post = cursor.fetchone()
+
     conn.commit()
 
     return {"data": new_post}
