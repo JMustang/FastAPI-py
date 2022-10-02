@@ -50,11 +50,14 @@ def root():
     return {'message': 'Hello, world!'}
 
 
+# GET
 @app.get("/posts")
 def get_posts():
     cursor.execute(""" SELECT * FROM posts """)
     posts = cursor.fetchall()
     return {"data": posts}
+
+# POST
 
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
@@ -68,6 +71,8 @@ def create_posts(post: Post):
 
     return {"data": new_post}
 
+# GET BY ID
+
 
 @app.get('/posts/{id}')
 def get_post(id: int):
@@ -80,8 +85,10 @@ def get_post(id: int):
 
     return {"post_detail": post}
 
+# DELETE
 
-@ app.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
+
+@app.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int):
 
     cursor.execute(
@@ -93,16 +100,20 @@ def delete_post(id: int):
                             detail=f'Post with id: {id} does not exist!')
     return Response(status_code=status.HTTP_404_NOT_FOUND)
 
+# UPDATE
 
-@ app.put('/posts/{id}')
+
+@app.put('/posts/{id}')
 def update_post(id: int, post: Post):
-    index = find_index_post(id)
 
-    if index == None:
-        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+    cursor.execute("""UPDATE posts SET title = %s, author = %s, published = %s WHERE id = %s RETURNING *""",
+                   (post.title, post.author, post.published, str(id)))
+
+    updated_post = cursor.fetchone()
+    conn.commit()
+
+    if updated_post == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Post with id: {id} does not exist!')
 
-    post_dict = post.dict()
-    post_dict['id'] = id
-    products[index] = post_dict
-    return {'data': post_dict}
+    return {'data': updated_post}
