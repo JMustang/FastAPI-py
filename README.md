@@ -35,3 +35,6 @@ docker run --name postgres-py -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d post
 - -p 5432:5432: This is the port that will be used to connect to the postgres server.
 - -e POSTGRES_PASSWORD=postgres: Create a password for the postgres server.
 - -d postgres: The postgres server will connect.
+
+
+### ORM sqlachemy
