@@ -57,7 +57,10 @@ def root():
 
 @app.get('/testing')
 def testing_posts(db: Session = Depends(get_db)):
-    return {"status": "succesfully"}
+
+    # Models.nome_da_table -> seria o nome da tabela no banco de dados
+    posts = db.query(models.Post).all()
+    return {"data": posts}
 
 # GET
 
