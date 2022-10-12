@@ -61,10 +61,9 @@ def testing_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return {"data": posts}
 
+
 # GET
 # Models.nome_da_table -> seria o nome da tabela no banco de dados
-
-
 @app.get("/posts")
 def get_posts(db: Session = Depends(get_db)):
     # cursor.execute(""" SELECT * FROM posts """)
@@ -72,9 +71,8 @@ def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return {"data": posts}
 
+
 # POST
-
-
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post, db: Session = Depends(get_db)):
     # cursor.execute("""INSERT INTO posts (title, author, published) VALUES (%s, %s, %s) RETURNING * """,
@@ -92,9 +90,8 @@ def create_posts(post: Post, db: Session = Depends(get_db)):
 
     return {"data": new_post}
 
+
 # GET BY ID
-
-
 @app.get('/posts/{id}')
 def get_post(id: int, db: Session = Depends(get_db)):
     # cursor.execute("""SELECT * FROM posts WHERE id = %s """, (str(id),))
@@ -108,9 +105,8 @@ def get_post(id: int, db: Session = Depends(get_db)):
 
     return {"post_detail": post}
 
+
 # DELETE
-
-
 @app.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, db: Session = Depends(get_db)):
 
@@ -130,20 +126,27 @@ def delete_post(id: int, db: Session = Depends(get_db)):
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+
 # UPDATE
-
-
 @app.put('/posts/{id}')
-def update_post(id: int, post: Post):
+def update_post(id: int, post_update: Post, db: Session = Depends(get_db)):
 
-    cursor.execute("""UPDATE posts SET title = %s, author = %s, published = %s WHERE id = %s RETURNING *""",
-                   (post.title, post.author, post.published, str(id)))
+    # cursor.execute("""UPDATE posts SET title = %s, author = %s, published = %s WHERE id = %s RETURNING *""",
+    #                (post.title, post.author, post.published, str(id)))
 
-    updated_post = cursor.fetchone()
-    conn.commit()
+    # updated_post = cursor.fetchone()
+    # conn.commit()
 
-    if updated_post == None:
+    update_post = db.query(models.Post).filter(models.Post.id == id)
+
+    post = update_post.first()
+
+    if post == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Post with id: {id} does not exist!')
 
-    return {'data': updated_post}
+    update_post.update(post_update.dict(), synchronize_session=False)
+
+    db.commit()
+
+    return {'data': update_post.first()}
