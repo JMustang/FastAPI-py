@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
 from sqlalchemy.orm import Session
-from . import models
+from . import models, schema
 from .database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
@@ -54,33 +54,19 @@ def find_index_post(id):
 def root():
     return {'message': 'Hello, world!'}
 
-
-@app.get('/testing')
-def testing_posts(db: Session = Depends(get_db)):
-
-    posts = db.query(models.Post).all()
-    return {"data": posts}
-
-
 # GET
 # Models.nome_da_table -> seria o nome da tabela no banco de dados
+
+
 @app.get("/posts")
 def get_posts(db: Session = Depends(get_db)):
-    # cursor.execute(""" SELECT * FROM posts """)
-    # posts = cursor.fetchall()
     posts = db.query(models.Post).all()
     return {"data": posts}
 
 
 # POST
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-def create_posts(post: Post, db: Session = Depends(get_db)):
-    # cursor.execute("""INSERT INTO posts (title, author, published) VALUES (%s, %s, %s) RETURNING * """,
-    #                (post.title, post.author, post.published))
-
-    # new_post = cursor.fetchone()
-
-    # conn.commit()
+def create_posts(post: schema.PostCreate, db: Session = Depends(get_db)):
     new_post = models.Post(
         **post.dict())
 
@@ -94,9 +80,6 @@ def create_posts(post: Post, db: Session = Depends(get_db)):
 # GET BY ID
 @app.get('/posts/{id}')
 def get_post(id: int, db: Session = Depends(get_db)):
-    # cursor.execute("""SELECT * FROM posts WHERE id = %s """, (str(id),))
-    # post = cursor.fetchone()
-
     post = db.query(models.Post).filter(models.Post.id == id).first()
 
     if not post:
@@ -109,12 +92,6 @@ def get_post(id: int, db: Session = Depends(get_db)):
 # DELETE
 @app.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, db: Session = Depends(get_db)):
-
-    # cursor.execute(
-    #     """DELETE FROM posts WHERE id = %s returning *""", (str(id),))
-    # deleted_post = cursor.fetchone()
-    # conn.commit()
-
     del_post = db.query(models.Post).filter(models.Post.id == id)
 
     if del_post.first() == None:
@@ -129,14 +106,7 @@ def delete_post(id: int, db: Session = Depends(get_db)):
 
 # UPDATE
 @app.put('/posts/{id}')
-def update_post(id: int, post_update: Post, db: Session = Depends(get_db)):
-
-    # cursor.execute("""UPDATE posts SET title = %s, author = %s, published = %s WHERE id = %s RETURNING *""",
-    #                (post.title, post.author, post.published, str(id)))
-
-    # updated_post = cursor.fetchone()
-    # conn.commit()
-
+def update_post(id: int, post_update: schema.PostCreate, db: Session = Depends(get_db)):
     update_post = db.query(models.Post).filter(models.Post.id == id)
 
     post = update_post.first()
