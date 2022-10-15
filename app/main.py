@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import FastAPI, Response, status, HTTPException, Depends
 from fastapi.params import Body
 from pydantic import BaseModel
@@ -54,11 +54,11 @@ def find_index_post(id):
 def root():
     return {'message': 'Hello, world!'}
 
-# GET
+# GET ALL POST
 # Models.nome_da_table -> seria o nome da tabela no banco de dados
 
 
-@app.get("/posts")
+@app.get("/posts", response_model=List[schema.Post])
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return posts
