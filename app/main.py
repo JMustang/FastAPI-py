@@ -78,7 +78,7 @@ def create_posts(post: schema.PostCreate, db: Session = Depends(get_db)):
 
 
 # GET BY ID
-@app.get('/posts/{id}')
+@app.get('/posts/{id}', response_model=schema.Post)
 def get_post(id: int, db: Session = Depends(get_db)):
     post = db.query(models.Post).filter(models.Post.id == id).first()
 
@@ -105,7 +105,7 @@ def delete_post(id: int, db: Session = Depends(get_db)):
 
 
 # UPDATE
-@app.put('/posts/{id}')
+@app.put('/posts/{id}', response_model=schema.Post)
 def update_post(id: int, post_update: schema.PostCreate, db: Session = Depends(get_db)):
     update_post = db.query(models.Post).filter(models.Post.id == id)
 

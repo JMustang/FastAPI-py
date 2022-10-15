@@ -12,11 +12,8 @@ class PostCreate(PostBase):
     pass
 
 
-class Post(BaseModel):
+class Post(PostBase):
     id: int
-    title: str
-    author: str
-    published: bool
     created_at: datetime
 
     # This turn the schema model into a python dictionar
