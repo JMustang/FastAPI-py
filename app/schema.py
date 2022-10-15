@@ -9,3 +9,9 @@ class PostBase(BaseModel):
 
 class PostCreate(PostBase):
     pass
+
+
+class Post(BaseModel):
+    title: str
+    author: str
+    published: bool
