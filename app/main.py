@@ -61,7 +61,7 @@ def root():
 @app.get("/posts")
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
-    return {"data": posts}
+    return posts
 
 
 # POST
@@ -74,7 +74,7 @@ def create_posts(post: schema.PostCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_post)
 
-    return {"data": new_post}
+    return new_post
 
 
 # GET BY ID
@@ -86,7 +86,7 @@ def get_post(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Post with id: {id}, not found')
 
-    return {"post_detail": post}
+    return post
 
 
 # DELETE
@@ -119,4 +119,4 @@ def update_post(id: int, post_update: schema.PostCreate, db: Session = Depends(g
 
     db.commit()
 
-    return {'data': update_post.first()}
+    return update_post.first()
