@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 
 
@@ -12,6 +13,13 @@ class PostCreate(PostBase):
 
 
 class Post(BaseModel):
+    id: int
     title: str
     author: str
     published: bool
+    created_at: datetime
+
+    # This turn the schema model into a python dictionar
+
+    class Config:
+        orm_mode = True
