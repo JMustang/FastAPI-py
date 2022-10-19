@@ -122,7 +122,7 @@ def update_post(id: int, post_update: schema.PostCreate, db: Session = Depends(g
     return update_post.first()
 
 
-@app.post('/users', status_code=status.HTTP_201_CREATED)
+@app.post('/users', status_code=status.HTTP_201_CREATED, response_model=schema.UserOut)
 def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     new_user = models.User(
         **user.dict())
