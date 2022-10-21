@@ -44,3 +44,8 @@ docker run --name postgres-py -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d post
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL.
 
 It provides a full suite of well known enterprise-level persistence patterns, designed for efficient and high-performing database access, adapted into a simple and Pythonic domain language.
+
+
+### Passlib and Bcrypt
+
+- Hashing the password using passlib to cryptographically 
