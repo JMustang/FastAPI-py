@@ -1,14 +1,12 @@
-from typing import Optional, List
-from fastapi import FastAPI, Response, status, HTTPException, Depends
-from fastapi.params import Body
+from fastapi import FastAPI
+from . import models
+from .database import engine
 from pydantic import BaseModel
-from random import randrange
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
-from sqlalchemy.orm import Session
-from . import models, schema, utils
-from .database import engine, get_db
+from .routes import post, user
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -33,116 +31,11 @@ while True:
         print('Error: ', error)
         time.sleep(2)
 
-products = [{"title": "The Hobbit", "author": "JRR Tolkien", "id": 1},
-            {"title": "The Lord of the Rings", "author": "JRR Tolkien", "id": 2},
-            {"title": "As Aventuras Do Caça Feitiço", "author": "Joseph DeLaney", "id": 3}]
 
-
-def find_post(id):
-    for p in products:
-        if p["id"] == id:
-            return p
-
-
-def find_index_post(id):
-    for i, p in enumerate(products):
-        if p["id"] == id:
-            return i
+app.include_router(post.router)
+app.include_router(user.router)
 
 
 @app.get('/')
 def root():
     return {'message': 'Hello, world!'}
-
-# GET ALL POST
-# Models.nome_da_table -> seria o nome da tabela no banco de dados
-
-
-@app.get("/posts", response_model=List[schema.Post])
-def get_posts(db: Session = Depends(get_db)):
-    posts = db.query(models.Post).all()
-    return posts
-
-
-# POST
-@app.post("/posts", status_code=status.HTTP_201_CREATED, response_model=schema.Post)
-def create_posts(post: schema.PostCreate, db: Session = Depends(get_db)):
-    new_post = models.Post(
-        **post.dict())
-
-    db.add(new_post)
-    db.commit()
-    db.refresh(new_post)
-
-    return new_post
-
-
-# GET BY ID
-@app.get('/posts/{id}', response_model=schema.Post)
-def get_post(id: int, db: Session = Depends(get_db)):
-    post = db.query(models.Post).filter(models.Post.id == id).first()
-
-    if not post:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Post with id: {id}, not found')
-
-    return post
-
-
-# DELETE
-@app.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete_post(id: int, db: Session = Depends(get_db)):
-    del_post = db.query(models.Post).filter(models.Post.id == id)
-
-    if del_post.first() == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Post with id: {id} does not exist!')
-
-    del_post.delete(synchronize_session=False)
-    db.commit()
-
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
-
-
-# UPDATE
-@app.put('/posts/{id}', response_model=schema.Post)
-def update_post(id: int, post_update: schema.PostCreate, db: Session = Depends(get_db)):
-    update_post = db.query(models.Post).filter(models.Post.id == id)
-
-    post = update_post.first()
-
-    if post == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Post with id: {id} does not exist!')
-
-    update_post.update(post_update.dict(), synchronize_session=False)
-
-    db.commit()
-
-    return update_post.first()
-
-
-# USERS CRUD
-@app.post('/users', status_code=status.HTTP_201_CREATED, response_model=schema.UserOut)
-def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
-
-    # hash the password - user.password
-    hashed_password = utils.hash(user.password)
-    user.password = hashed_password
-    new_user = models.User(
-        **user.dict())
-
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-
-    return new_user
-
-
-@app.get('/users/{id}', response_model=schema.UserOut)
-def get_user(id: int, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.id == id).first()
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with id {id} does not exist.')
-    return user
