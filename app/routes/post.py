@@ -5,20 +5,22 @@ from sqlalchemy.orm import Session
 from typing import List
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix='/posts'
+)
 
 # GET ALL POST
 # Models.nome_da_table -> seria o nome da tabela no banco de dados
 
 
-@router.get("/posts", response_model=List[schema.Post])
+@router.get("/", response_model=List[schema.Post])
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     return posts
 
 
 # POST
-@router.post("/posts", status_code=status.HTTP_201_CREATED, response_model=schema.Post)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schema.Post)
 def create_posts(post: schema.PostCreate, db: Session = Depends(get_db)):
     new_post = models.Post(
         **post.dict())
@@ -31,7 +33,7 @@ def create_posts(post: schema.PostCreate, db: Session = Depends(get_db)):
 
 
 # GET BY ID
-@router.get('/posts/{id}', response_model=schema.Post)
+@router.get('/{id}', response_model=schema.Post)
 def get_post(id: int, db: Session = Depends(get_db)):
     post = db.query(models.Post).filter(models.Post.id == id).first()
 
@@ -43,7 +45,7 @@ def get_post(id: int, db: Session = Depends(get_db)):
 
 
 # DELETE
-@router.delete('/posts/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, db: Session = Depends(get_db)):
     del_post = db.query(models.Post).filter(models.Post.id == id)
 
@@ -58,7 +60,7 @@ def delete_post(id: int, db: Session = Depends(get_db)):
 
 
 # UPDATE
-@router.put('/posts/{id}', response_model=schema.Post)
+@router.put('/{id}', response_model=schema.Post)
 def update_post(id: int, post_update: schema.PostCreate, db: Session = Depends(get_db)):
     update_post = db.query(models.Post).filter(models.Post.id == id)
 
