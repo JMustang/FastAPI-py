@@ -8,8 +8,26 @@ Link for more information about [FastAPI](https://fastapi.tiangolo.com/) or [pyt
 - Python API Development - Comprehensive Course for Beginners
 
 A restful crud api with python using fastapi framework.
-SWAGGER
 [SWAGGER](http://127.0.0.1:8000/docs#/) docs.
+
+### About Swagger
+
+- Swagger is a powerful yet easy-to-use suite of API developer tools for teams and individuals, enabling development across the entire API lifecycle, from design and documentation, to test and deployment.
+
+- Swagger consists of a mix of open source, free and commercially available tools that allow anyone, from technical engineers to street smart product managers to build amazing APIs that everyone loves.
+
+- Swagger is built by SmartBear Software, the leader in software quality tools for teams. SmartBear is behind some of the biggest names in the software space, including Swagger, SoapUI and QAComplete.
+
+
+## The History Behind Swagger
+
+- Swagger started out as a simple, open source specification for designing RESTful APIs in 2010. Open source tooling like the Swagger UI, Swagger Editor and the Swagger Codegen were also developed to better implement and visualize APIs defined in the specification. The Swagger project, consisting of the specification and the open source tools, became immensely popular, creating a massive ecosystem of community driven tools.
+
+- In 2015, the Swagger project was acquired by SmartBear Software. The Swagger Specification was donated to the Linux foundation and renamed the OpenAPI
+
+- Specification to formally standardize the way REST APIs are described. The OpenAPI Initiative was created to guide the development of the OAS in an open and transparent manner.
+
+- Swagger has since become the most popular suite of tools to fully leverage the power of the OAS across the API lifecycle.
 
 
 ### CRUD
