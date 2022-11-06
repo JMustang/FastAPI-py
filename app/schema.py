@@ -18,7 +18,7 @@ class Post(PostBase):
     created_at: datetime
     owner_id: int
 
-    # This turn the schema model into a python dictionar
+    # This turn the schema model into a python dictionary
 
     class Config:
         orm_mode = True
