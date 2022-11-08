@@ -84,3 +84,36 @@ Although JWTs can be encrypted to also provide secrecy between parties, we will 
 ```bash
 $ pip install bcrypt
 ```
+
+### pydantic
+
+Data validation and settings management using Python type hints.
+
+Fast and extensible, pydantic plays nicely with your linters/IDE/brain. Define how data should be in pure, canonical Python 3.7+; validate it with pydantic.
+
+Help
+See documentation for more details.
+
+Installation
+Install using pip install -U pydantic or conda install pydantic -c conda-forge. For more installation options to make pydantic even faster, see the Install section in the documentation.
+
+A Simple Example
+
+```py
+from datetime import datetime
+from typing import List, Optional
+from pydantic import BaseModel
+
+class User(BaseModel):
+    id: int
+    name = 'John Doe'
+    signup_ts: Optional[datetime] = None
+    friends: List[int] = []
+
+external_data = {'id': '123', 'signup_ts': '2017-06-01 12:22', 'friends': [1, '2', b'3']}
+user = User(**external_data)
+print(user)
+#> User id=123 name='John Doe' signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]
+print(user.id)
+#> 123
+```
