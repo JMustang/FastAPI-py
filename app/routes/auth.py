@@ -4,7 +4,9 @@ from sqlalchemy.orm import Session
 
 from .. import database, schema, models, utils, oauth2
 
-router = APIRouter(tags=['Authentication'])
+router = APIRouter(
+    tags=['Authentication']
+)
 
 
 @router.post('/login', response_model=schema.Token)
