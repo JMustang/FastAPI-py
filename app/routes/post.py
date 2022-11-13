@@ -15,8 +15,9 @@ router = APIRouter(
 
 
 @router.get("/", response_model=List[schema.Post])
-def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    posts = db.query(models.Post).all()
+def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user),
+              limit: int = 10):
+    posts = db.query(models.Post).limit(limit).all()
 
     # this line shows only post for the current user .filter(models.Post.owner_id == current_user.id).all
 
