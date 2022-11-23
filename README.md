@@ -37,7 +37,7 @@ A restful crud api with python using fastapi framework.
 - PUT     endpoint ('/posts/{id}')
 
 
-### database
+## database
 
 - PostgresSQL
 
@@ -53,6 +53,43 @@ docker run --name postgres-py -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d post
 - -p 5432:5432: This is the port that will be used to connect to the postgres server.
 - -e POSTGRES_PASSWORD=postgres: Create a password for the postgres server.
 - -d postgres: The postgres server will connect.
+
+### JOIN
+
+- PostgreSQL LEFT JOIN
+
+ntroduction to PostgreSQL LEFT JOIN clause
+Suppose that you have two tables: A and B.
+
+<img src="Screenshot_1.png" alt="Table" width="200"/>
+
+A and B tables
+Each row in the table A may have zero or many corresponding rows in the table B while each row in the table B has one and only one corresponding row in the table A .
+
+To select data from the table A that may or may not have corresponding rows in the table B , you use the LEFT JOIN clause.
+
+The following statement illustrates the LEFT JOIN syntax that joins the table A with the table B :
+
+```sql
+SELECT
+	pka,
+	c1,
+	pkb,
+	c2
+FROM
+	A
+LEFT JOIN B ON pka = fka;
+```
+To join the table A with the table B table using a left join, you follow these steps:
+
+First, specify the columns in both tables from which you want to select data in the SELECT clause.
+Second, specify the left table (table A) in the FROM clause.
+Third, specify the right table (table B) in the LEFT JOIN clause and the join condition after the ON keyword.
+The LEFT JOIN clause starts selecting data from the left table. For each row in the left table, it compares the value in the pka column with the value of each row in the fka column in the right table.
+
+If these values are equal, the left join clause creates a new row that contains columns that appear in the SELECT clause and adds this row to the result set.
+
+In case these values are not equal, the left join clause also creates a new row that contains columns that appear in the SELECT clause. In addition, it fills the columns that come from the right table with NULL.
 
 
 ### ORM sqlachemy
