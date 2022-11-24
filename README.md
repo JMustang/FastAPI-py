@@ -91,6 +91,34 @@ If these values are equal, the left join clause creates a new row that contains 
 
 In case these values are not equal, the left join clause also creates a new row that contains columns that appear in the SELECT clause. In addition, it fills the columns that come from the right table with NULL.
 
+The following Venn diagram illustrates how the LEFT JOIN clause works:
+
+<img src="venn.png" alt="Table" width="200"/>
+
+Note that the LEFT JOIN is also referred to as LEFT OUTER JOIN.
+
+PostgreSQL LEFT JOIN examples
+Let’s look at the following film and inventory tables from the sample database.
+
+<img src="imagem1.png" alt="Table" width="200"/>
+
+Each row in the film table may have zero or many rows in the inventorytable. Each row in the inventory table has one and only one row in the film table.
+
+The film_id column establishes the link between the film and inventory tables.
+
+The following statement uses the LEFT JOIN clause to join film table with the inventorytable:
+
+```sql
+SELECT
+	film.film_id,
+	title,
+	inventory_id
+FROM
+	film
+LEFT JOIN inventory 
+    ON inventory.film_id = film.film_id
+ORDER BY title;
+```
 
 ### ORM sqlachemy
 
