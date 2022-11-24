@@ -30,6 +30,14 @@ class Post(PostBase):
     owner_id: int
     owner: UserOut
 
+    class Config:
+        orm_mode = True
+
+
+class PostOut(PostBase):
+    Post: Post
+    votes: int
+
     # This turn the schema model into a python dictionary
 
     class Config:
