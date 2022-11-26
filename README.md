@@ -237,3 +237,17 @@ Limbic also has a set of tools that are easy to reuse and extend for different u
 More advanced strategies will be added as I can assess the performance and correctly setup an experimental framework that anyone can replicate. These will be considered as future work. However, if you have some ideas or want to contribute, please do! Just let me know how can I help :)
 
 It's important to note that if you are using the NRC or other proprietary lexicons, you should read and follow their terms of use. Otherwise, if you are using this package with your lexicons, you can use it however you want following the MIT license.
+
+
+## Migrations on python
+
+## Create migrations
+
+```bash
+ alembic revision -m "create posts table"
+ ```
+ ## Running migrations
+
+```bash
+alembic upgrade "put here the 'revision' number"
+ ```

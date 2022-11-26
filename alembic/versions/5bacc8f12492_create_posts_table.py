@@ -16,9 +16,14 @@ branch_labels = None
 depends_on = None
 
 
-def upgrade() -> None:
+# Equivalente as magrations no nestjs
+
+def upgrade():
+    op.create_table('posts', sa.Column('id', sa.Integer(), nullable=False, primary_key=True),
+                    sa.Column('title', sa.String(), nullable=False))
     pass
 
 
-def downgrade() -> None:
+def downgrade():
+    op.drop_table('posts')
     pass
