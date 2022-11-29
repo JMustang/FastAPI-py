@@ -251,3 +251,17 @@ It's important to note that if you are using the NRC or other proprietary lexico
 ```bash
 alembic upgrade "put here the 'revision' number"
  ```
+
+ Running the following migrations
+
+```bash
+ alembic upgrade head
+ ```
+
+  Undo the following migrations
+
+  - we can use '-1' to go back to the previous migration step 
+ 
+```bash
+ alembic upgrade 'put here the down revision number'
+ ```
