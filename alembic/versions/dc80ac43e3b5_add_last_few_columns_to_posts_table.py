@@ -22,7 +22,7 @@ def upgrade():
     ),)
     op.add_column('posts', sa.Column(
         'created_at', sa.TIMESTAMP(timezone=True), nullable=False, server_default=sa.text
-        ('NOW(')),)
+        ('NOW()')),)
     pass
 
 

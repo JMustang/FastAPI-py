@@ -218,7 +218,7 @@ The .env file format will still be at the center of security. But we have added 
 In the next set of security docs you can read about how these work alongside your .env files to significantly improve security. This is the next great leap forward in application secrets security, and like the original .env file format we have worked hard to minimize complexity in order to increase security.
 
 
-## Limbic
+## Alembic
 
 Lexicon-based Emotion analysis from text tool for series/movie subtitles, books, etc.
 
