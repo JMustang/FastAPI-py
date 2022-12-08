@@ -293,3 +293,9 @@ alembic upgrade "put here the 'revision' number"
 ```bash
  alembic upgrade 'put here the down revision number'
  ```
+
+ # CORS
+
+- CORS (Cross-origin Resource Sharing) is a mechanism used by browsers to share resources between different origins. CORS is a W3C specification and makes use of HTTP headers to inform browsers whether or not a given resource can be accessed.
+
+- To understand better, imagine that you are developing a web application consisting of a SPA and an API. Everything runs smoothly in your local environment.
