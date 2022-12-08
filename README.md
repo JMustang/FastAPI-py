@@ -10,6 +10,13 @@ Link for more information about [FastAPI](https://fastapi.tiangolo.com/) or [pyt
 A restful crud api with python using fastapi framework.
 [SWAGGER](http://127.0.0.1:8000/docs#/) docs.
 
+
+This comand run the **"requirements.md"** file, that has all the libs used in this project.
+```bash
+pip install -r requirements.md 
+```
+
+
 ### About Swagger
 
 - Swagger is a powerful yet easy-to-use suite of API developer tools for teams and individuals, enabling development across the entire API lifecycle, from design and documentation, to test and deployment.
